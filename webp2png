@@ -1,0 +1,44 @@
+#!/usr/bin/env python
+
+import glob, os, time, sys
+from webptools import dwebp, grant_permission
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
+
+DownloadsPath = sys.argv[1]
+print(DownloadsPath)
+
+def convertAll(inDir):
+    os.chdir(inDir)
+
+    webpFiles = []
+    for file in glob.glob("*.webp"):
+        webpFiles.append(file)
+
+    grant_permission()
+
+    for file in webpFiles:
+        pngName, webpFile = file.replace("webp", "png"), file
+
+        log = dwebp(input_image=file, output_image=pngName, option="-o", logging="-v")
+
+        os.remove(webpFile)
+
+class DownloaderHandler(FileSystemEventHandler):
+    def on_created(self, event):
+        convertAll(DownloadsPath)
+
+
+observer = Observer()
+event_handler = DownloaderHandler()
+
+observer.schedule(event_handler, path=DownloadsPath)
+observer.start()
+
+try:
+    while True:
+        time.sleep(3)
+except KeyboardInterrupt:
+    observer.stop()
+
+observer.join()
