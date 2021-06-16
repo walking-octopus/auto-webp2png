@@ -8,6 +8,6 @@ I hope someone will find it useful.
 [Source](https://pagepipe.com/dont-use-webp-image-format/)
 
 ## Installation
-1. Install it: `pip install watchdog webptools; wget https://temp.sh/QBWSd/webp2png; chmod +x ./webp2png; mv ./webp2png ~/.local/bin/webp2png;`
+1. Install it: `pip install watchdog webptools; wget https://raw.githubusercontent.com/walking-octopus/auto-webp2png/main/webp2png; chmod +x ./webp2png; mv ./webp2png ~/.local/bin/webp2png;`
 2. Test it: `webp2png ~/Downloads`
 3. Add it to startup
